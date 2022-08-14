@@ -5,7 +5,6 @@ from typing import Dict
 import abc
 import numpy as np
 from scipy.optimize import NonlinearConstraint, LinearConstraint, minimize
-import cvxpy as cp
 import pyomo.environ as pyo
 
 
@@ -39,28 +38,24 @@ class OptimizationModel(abc.ABC):
         """
         Инициализация целевой функции - выручка
         """
-        pass
 
     @abc.abstractmethod
     def add_constraints(self):
         """
         Добавление в модель ограничения на маржу
         """
-        pass
 
     @abc.abstractmethod
     def init_constraints(self):
         """
         Добавление в модель ограничения на маржу
         """
-        pass
 
     @abc.abstractmethod
-    def solve(self, solver, options) -> Dict:
+    def solve(self) -> Dict:
         """
         Метод, запускающий решение поставленной оптимизационной задачи
         """
-        pass
 
 
 class ScipyModel(OptimizationModel):
@@ -91,18 +86,18 @@ class ScipyModel(OptimizationModel):
 
     def init_constraints(self):
         def con_mrg(x):
-            m = sum((self.P * x - self.C) * self.Q * self._el(self.E, x))
-            return m
+            con_mrg_expr = sum((self.P * x - self.C) * self.Q * self._el(self.E, x))
+            return con_mrg_expr
         constr = NonlinearConstraint(con_mrg, self.m_min, np.inf)
         self.constraints.append(constr)
 
-    def solve(self, solver='slsqp', options={}):
+    def solve(self):
 
         result = minimize(self.obj,
                           self.x0,
-                          method=solver,
+                          method='cobyla',
                           constraints=self.constraints,
-                          options=options)
+                          )
 
         self.data['x_opt'] = result['x']
         self.data['P_opt'] = self.data['x_opt'] * self.data['P']
@@ -117,6 +112,9 @@ class ScipyModel(OptimizationModel):
 
 
 class PyomoModel(OptimizationModel):
+    """
+    Класс, который создаёт NLP оптимизационную модель на базе библиотеки PYOMO
+    """
 
     def __init__(self, data):
         super().__init__(data)
@@ -150,9 +148,9 @@ class PyomoModel(OptimizationModel):
                            for i in range(self.N)) >= self.m_min
         self.model.con_mrg = pyo.Constraint(rule=con_mrg_expr)
 
-    def solve(self, solver='ipopt'):
+    def solve(self):
 
-        solver = pyo.SolverFactory(solver, tee=False)
+        solver = pyo.SolverFactory('ipopt', tee=False)
 
         result = solver.solve(self.model)
 

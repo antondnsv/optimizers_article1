@@ -38,31 +38,59 @@ if __name__ == '__main__':
 
     if args['mode'] == 'pyomo':
         print('запуск модели Pyomo')
-        model = pricing_optimization(data, PyomoModel, 'ipopt')
+        model = pricing_optimization(data, PyomoModel)
         print(model['data'])
 
     if args['mode'] == 'scipy':
         print('запуск модели Scipy')
-        model = pricing_optimization(data, ScipyModel, 'cobyla')
-        print(model['data'])
+        model = pricing_optimization(data, ScipyModel)
+        # print(model['data'])
+        print(model['status'])
+        print(model['message'])
 
     if args['mode'] == 'compare':
 
         times = []
         for n in range(10, 255, 5):
             data = generate_data(n, seed=args['seed'])
-            model_pyomo_ipopt = pricing_optimization(data, PyomoModel, 'ipopt')
-            model_scipy_cobyla = pricing_optimization(data, ScipyModel, 'cobyla')
-            print(n, model_pyomo_ipopt['t'], model_pyomo_ipopt['status'],
-                  model_scipy_cobyla['t'], model_scipy_cobyla['status'])
-            times.append([n,
-                          model_pyomo_ipopt['t'],
-                          model_pyomo_ipopt['status'],
-                          model_scipy_cobyla['t'],
-                          model_scipy_cobyla['status']
-                          ])
+            model_pyomo_ipopt = pricing_optimization(data, PyomoModel)
+            model_scipy_cobyla = pricing_optimization(data, ScipyModel)
+            df_pyomo = model_pyomo_ipopt['data'].set_index('plu')
+            df_scipy = model_scipy_cobyla['data'].set_index('plu')
+            equal_answers = (df_pyomo['x_opt'].round(2) != df_scipy['x_opt'].round(2)).sum() > 0
+            P_opt = (df_pyomo['P_opt'].sum().round(3), df_scipy['P_opt'].sum().round(3))
+            Q_opt = (df_pyomo['Q_opt'].sum().round(3), df_scipy['Q_opt'].sum().round(3))
+            res = (
+                n,
+                round(model_pyomo_ipopt['t'], 5),
+                model_pyomo_ipopt['status'],
+                model_pyomo_ipopt['message'],
+                round(model_scipy_cobyla['t'], 5),
+                model_scipy_cobyla['status'],
+                model_scipy_cobyla['message'],
+                equal_answers,
+                P_opt[0],
+                P_opt[1],
+                Q_opt[0],
+                Q_opt[1],
+            )
 
-        res = pd.DataFrame(times, columns=['N', 'pyomo_ipopt', 'pyomo_status', 'scipy_cobyla', 'scipy_status'])
+            print(res)
+            times.append(res)
+
+        res = pd.DataFrame(times, columns=['N',
+                                           'pyomo_ipopt',
+                                           'pyomo_status',
+                                           'pyomo_message',
+                                           'scipy_cobyla',
+                                           'scipy_status',
+                                           'scipy_message',
+                                           'equal',
+                                           'P_opt_pyomo',
+                                           'P_opt_scipy',
+                                           'Q_opt_pyomo',
+                                           'Q_opt_scipy',
+                                           ])
         res.to_csv(FILE_STAT, sep='\t', index=False)
 
 

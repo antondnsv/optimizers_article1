@@ -1,50 +1,50 @@
-N	pyomo_ipopt	pyomo_status	scipy_cobyla	scipy_status
-10	0.05750441551208496	ok	0.009743690490722656	1
-15	0.029040813446044922	ok	0.01992630958557129	1
-20	0.04045748710632324	ok	0.02625894546508789	1
-25	0.07847428321838379	ok	0.05385708808898926	1
-30	0.043998003005981445	ok	0.1182718276977539	2
-35	0.040436506271362305	ok	0.1245584487915039	1
-40	0.04058551788330078	ok	0.21063446998596191	2
-45	0.05077981948852539	ok	0.3196108341217041	1
-50	0.05666685104370117	ok	0.44280028343200684	1
-55	0.05478048324584961	ok	0.6043977737426758	2
-60	0.04920387268066406	ok	0.6471099853515625	2
-65	0.06080913543701172	ok	0.9314122200012207	2
-70	0.055934906005859375	ok	0.9569737911224365	2
-75	0.061209917068481445	ok	1.2512359619140625	2
-80	0.06095147132873535	ok	1.4168837070465088	2
-85	0.06607341766357422	ok	1.749089002609253	2
-90	0.06224417686462402	ok	1.8683011531829834	2
-95	0.06324529647827148	ok	2.589948892593384	4
-100	0.07550954818725586	ok	3.0986664295196533	2
-105	0.07473492622375488	ok	3.9288737773895264	4
-110	0.09392094612121582	ok	5.035656213760376	2
-115	0.08098101615905762	ok	0.04797673225402832	4
-120	0.08051609992980957	ok	5.700385570526123	2
-125	0.10582232475280762	ok	6.905651569366455	2
-130	0.07741951942443848	ok	0.11518239974975586	5
-135	0.10621047019958496	ok	7.942712068557739	2
-140	0.09115433692932129	ok	9.457878112792969	2
-145	0.15011930465698242	ok	11.359554290771484	2
-150	0.11476993560791016	ok	13.182669639587402	2
-155	0.10397148132324219	ok	15.572458982467651	2
-160	0.12932920455932617	ok	15.214051008224487	2
-165	0.09876632690429688	ok	0.1957709789276123	4
-170	0.1162726879119873	ok	0.3665783405303955	5
-175	0.1452805995941162	ok	17.958715677261353	4
-180	0.11686253547668457	ok	21.824751377105713	2
-185	0.15880417823791504	ok	22.45842981338501	2
-190	0.11317920684814453	ok	22.615420818328857	2
-195	0.1187891960144043	ok	25.030165195465088	2
-200	0.11244463920593262	ok	25.527594566345215	4
-205	0.11717820167541504	ok	27.87106156349182	2
-210	0.12476682662963867	ok	4.425211429595947	5
-215	0.12456846237182617	ok	31.994431495666504	2
-220	0.12795805931091309	ok	0.4036264419555664	5
-225	0.1394519805908203	ok	38.09694957733154	2
-230	0.13808393478393555	ok	38.98218822479248	4
-235	0.1303846836090088	ok	45.756359577178955	2
-240	0.13437128067016602	ok	0.4844236373901367	5
-245	0.12830066680908203	ok	0.550041913986206	5
-250	0.1411724090576172	ok	0.5779035091400146	5
+N	pyomo_ipopt	pyomo_status	pyomo_message	scipy_cobyla	scipy_status	scipy_message	equal	P_opt_pyomo	P_opt_scipy	Q_opt_pyomo	Q_opt_scipy
+10	0.0366	ok	optimal	0.0105	1	Optimization terminated successfully.	False	1007.517	1007.525	18.609	18.609
+15	0.02924	ok	optimal	0.02049	1	Optimization terminated successfully.	True	1534.097	1537.02	31.322	31.31
+20	0.03651	ok	optimal	0.02725	1	Optimization terminated successfully.	False	1909.156	1909.202	44.405	44.404
+25	0.03724	ok	optimal	0.0554	1	Optimization terminated successfully.	True	2365.033	2368.448	57.919	57.983
+30	0.03966	ok	optimal	0.12209	2	Maximum number of function evaluations has been exceeded.	True	2823.735	2812.998	60.914	60.69
+35	0.04055	ok	optimal	0.13168	1	Optimization terminated successfully.	True	3334.559	3328.992	70.865	70.816
+40	0.04842	ok	optimal	0.22565	2	Maximum number of function evaluations has been exceeded.	True	3676.422	3683.366	84.952	83.716
+45	0.04173	ok	optimal	0.36816	1	Optimization terminated successfully.	True	4300.516	4304.442	105.007	105.035
+50	0.04969	ok	optimal	0.5783	1	Optimization terminated successfully.	True	4788.193	4791.396	100.352	100.351
+55	0.07222	ok	optimal	0.58761	2	Maximum number of function evaluations has been exceeded.	True	5415.819	5388.334	126.81	126.52
+60	0.04016	ok	optimal	0.58013	2	Maximum number of function evaluations has been exceeded.	True	5864.612	5880.318	138.596	136.652
+65	0.04092	ok	optimal	0.86992	2	Maximum number of function evaluations has been exceeded.	True	6233.206	6221.355	161.08	160.466
+70	0.04891	ok	optimal	0.89814	2	Maximum number of function evaluations has been exceeded.	True	6782.534	6729.411	151.911	148.261
+75	0.04989	ok	optimal	1.12673	2	Maximum number of function evaluations has been exceeded.	True	7620.097	7566.412	173.093	170.013
+80	0.05434	ok	optimal	1.38498	2	Maximum number of function evaluations has been exceeded.	True	7782.868	7790.649	182.286	178.876
+85	0.07263	ok	optimal	1.77598	2	Maximum number of function evaluations has been exceeded.	True	8348.26	8357.981	224.505	223.558
+90	0.08176	ok	optimal	1.85962	2	Maximum number of function evaluations has been exceeded.	True	8891.088	8866.797	216.409	213.838
+95	0.06201	ok	optimal	2.66914	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	9452.461	9448.084	210.894	209.276
+100	0.06363	ok	optimal	3.20003	2	Maximum number of function evaluations has been exceeded.	True	9774.137	9716.618	216.765	212.489
+105	0.0789	ok	optimal	4.02269	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	10191.654	10267.581	249.956	246.927
+110	0.08	ok	optimal	5.30226	2	Maximum number of function evaluations has been exceeded.	True	10674.514	10701.733	254.422	254.24
+115	0.08612	ok	optimal	0.03873	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	11185.199	11227.85	260.361	221.238
+120	0.08125	ok	optimal	6.18136	2	Maximum number of function evaluations has been exceeded.	True	11710.933	11718.188	274.061	272.01
+125	0.08797	ok	optimal	7.49264	2	Maximum number of function evaluations has been exceeded.	True	12103.471	12130.828	257.199	256.649
+130	0.08521	ok	optimal	0.11935	5	NaN result encountered.	True	13161.304	13217.857	302.714	280.18
+135	0.0884	ok	optimal	8.53998	2	Maximum number of function evaluations has been exceeded.	True	13652.816	13479.352	288.489	285.158
+140	0.09176	ok	optimal	9.43959	2	Maximum number of function evaluations has been exceeded.	True	14171.943	14249.158	320.681	318.461
+145	0.10657	ok	optimal	11.10206	2	Maximum number of function evaluations has been exceeded.	True	14338.024	14456.566	315.671	313.292
+150	0.10328	ok	optimal	12.99924	2	Maximum number of function evaluations has been exceeded.	True	14609.393	14646.533	324.458	322.741
+155	0.11725	ok	optimal	15.61996	2	Maximum number of function evaluations has been exceeded.	True	15341.216	15294.452	346.789	346.553
+160	0.11929	ok	optimal	16.40197	2	Maximum number of function evaluations has been exceeded.	True	15955.001	15926.907	346.712	346.595
+165	0.10448	ok	optimal	0.21305	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	16267.51	16352.283	401.146	391.583
+170	0.12746	ok	optimal	0.38972	5	NaN result encountered.	True	16771.608	17106.672	414.273	394.632
+175	0.12264	ok	optimal	18.53982	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	17870.714	17755.809	418.449	393.503
+180	0.11848	ok	optimal	22.90652	2	Maximum number of function evaluations has been exceeded.	True	17823.855	17823.026	430.458	426.955
+185	0.12516	ok	optimal	23.66601	2	Maximum number of function evaluations has been exceeded.	True	18600.919	18606.357	440.912	439.698
+190	0.10876	ok	optimal	23.61013	2	Maximum number of function evaluations has been exceeded.	True	19209.523	19234.438	446.641	433.879
+195	0.12167	ok	optimal	26.81064	2	Maximum number of function evaluations has been exceeded.	True	19763.945	19760.071	460.517	458.971
+200	0.11464	ok	optimal	27.12994	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	20511.079	20386.054	482.332	462.087
+205	0.16314	ok	optimal	30.10139	2	Maximum number of function evaluations has been exceeded.	True	20387.777	20364.963	496.47	483.54
+210	0.15625	ok	optimal	4.91381	5	NaN result encountered.	True	20964.224	20810.482	524.488	492.11
+215	0.12575	ok	optimal	33.49713	2	Maximum number of function evaluations has been exceeded.	True	21775.151	21789.418	562.188	519.283
+220	0.12829	ok	optimal	0.45724	5	NaN result encountered.	True	22407.697	22514.917	549.265	502.828
+225	0.1287	ok	optimal	40.15311	2	Maximum number of function evaluations has been exceeded.	True	22571.121	22681.302	572.137	566.445
+230	0.14975	ok	optimal	41.49041	4	Did not converge to a solution satisfying the constraints. See `maxcv` for magnitude of violation.	True	23518.087	23476.557	573.585	540.157
+235	0.17013	ok	optimal	51.08516	2	Maximum number of function evaluations has been exceeded.	True	23785.627	23841.256	574.888	566.209
+240	0.141	ok	optimal	0.54619	5	NaN result encountered.	True	24062.596	24445.878	598.602	557.823
+245	0.12865	ok	optimal	0.56264	5	NaN result encountered.	True	24976.079	25214.39	616.015	574.049
+250	0.13582	ok	optimal	0.59907	5	NaN result encountered.	True	25871.343	26078.45	611.629	552.491

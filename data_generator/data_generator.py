@@ -1,4 +1,6 @@
-from typing import Dict
+"""
+Генератор данных для задачи ценообразования.
+"""
 import numpy as np
 import pandas as pd
 

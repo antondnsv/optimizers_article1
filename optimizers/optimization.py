@@ -1,3 +1,6 @@
+"""
+Запускатор оптимизаторов.
+"""
 from typing import Dict, Any
 from time import time
 from functools import wraps
@@ -5,6 +8,7 @@ import pandas as pd
 
 
 def timeit(function):
+    "Измерение времени выполнения функции"
     @wraps(function)
     def wrapper(*args, **kwargs):
         t0 = time()
@@ -18,7 +22,6 @@ def timeit(function):
 @timeit
 def pricing_optimization(data: pd.DataFrame,
                          opt_model: Any,
-                         solver: str,
                          ) -> Dict:
     """
     Запуск расчета оптимальных цен с помощью указанного класса оптимизатора и параметров
@@ -26,7 +29,6 @@ def pricing_optimization(data: pd.DataFrame,
     :param opt_model: класс модели оптимизатора
     :param opt_params: параметры оптимизации
     :param solver: солвер для оптимизации
-    :param solver_option: параметры солвера
     :return: словарь, возвращаемый моделью оптимизации
     """
 
@@ -35,6 +37,6 @@ def pricing_optimization(data: pd.DataFrame,
     model.init_objective()
     model.add_constraints()
     model.init_constraints()
-    result = model.solve(solver=solver)
+    result = model.solve()
     result['model_class'] = model
     return result
