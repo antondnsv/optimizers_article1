@@ -93,11 +93,7 @@ class ScipyModel(OptimizationModel):
 
     def solve(self):
 
-        result = minimize(self.obj,
-                          self.x0,
-                          method='cobyla',
-                          constraints=self.constraints,
-                          )
+        result = minimize(self.obj, self.x0,  method='cobyla', constraints=self.constraints)
 
         self.data['x_opt'] = result['x']
         self.data['P_opt'] = self.data['x_opt'] * self.data['P']

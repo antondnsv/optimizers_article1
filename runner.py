@@ -58,8 +58,10 @@ if __name__ == '__main__':
             df_pyomo = model_pyomo_ipopt['data'].set_index('plu')
             df_scipy = model_scipy_cobyla['data'].set_index('plu')
             equal_answers = (df_pyomo['x_opt'].round(2) != df_scipy['x_opt'].round(2)).sum() > 0
-            P_opt = (df_pyomo['P_opt'].sum().round(3), df_scipy['P_opt'].sum().round(3))
-            Q_opt = (df_pyomo['Q_opt'].sum().round(3), df_scipy['Q_opt'].sum().round(3))
+            RTO_opt = ((df_pyomo['Q_opt']*df_pyomo['P_opt']).sum().round(3), (df_scipy['Q_opt']*df_scipy['P_opt']).sum().round(3),)
+            MARGIN_opt = ((df_pyomo['Q_opt']*(df_pyomo['P_opt'] - df_pyomo['C'])).sum().round(3),
+                          (df_scipy['Q_opt']*(df_scipy['P_opt'] - df_scipy['C'])).sum().round(3))
+            # x_opt = (df_pyomo['x_opt'].to_list(), df_scipy['x_opt'].to_list())
             res = (
                 n,
                 round(model_pyomo_ipopt['t'], 5),
@@ -69,13 +71,13 @@ if __name__ == '__main__':
                 model_scipy_cobyla['status'],
                 model_scipy_cobyla['message'],
                 equal_answers,
-                P_opt[0],
-                P_opt[1],
-                Q_opt[0],
-                Q_opt[1],
+                RTO_opt[0],
+                RTO_opt[1],
+                MARGIN_opt[0],
+                MARGIN_opt[1],
             )
 
-            print(res)
+            print(res[:-2])
             times.append(res)
 
         res = pd.DataFrame(times, columns=['N',
@@ -85,11 +87,11 @@ if __name__ == '__main__':
                                            'scipy_cobyla',
                                            'scipy_status',
                                            'scipy_message',
-                                           'equal',
-                                           'P_opt_pyomo',
-                                           'P_opt_scipy',
-                                           'Q_opt_pyomo',
-                                           'Q_opt_scipy',
+                                           'equal_answers',
+                                           'RTO_pyomo',
+                                           'RTO_scipy',
+                                           'MARGIN_pyomo',
+                                           'MARGIN_scipy',
                                            ])
         res.to_csv(FILE_STAT, sep='\t', index=False)
 
@@ -110,4 +112,19 @@ if __name__ == '__main__':
         plt.title('Время решения MINLP задачи через pyomo.bonmin')
         plt.grid()
         plt.savefig(f'{IMAGES_PATH}/solving_time.png')
+        plt.show();
+
+        import seaborn as sns
+        sns.set_style(style="whitegrid")
+
+        plt.figure(figsize=(12, 6), dpi=100)
+
+        a = data['MARGIN_pyomo'] / data['MARGIN_scipy']
+        b = data['RTO_pyomo'] / data['RTO_scipy']
+        a, b = 100 * a, 100 * b
+        sns.scatterplot(a, b)
+        plt.ylabel('Оборот(pyomo) в % от Оборот(scipy)')
+        plt.xlabel('Прибыль(pyomo) в % от Прибыль(scipy)')
+        plt.savefig(f'{IMAGES_PATH}/analyze.png')
+
         plt.show()
