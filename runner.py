@@ -4,6 +4,8 @@ import sys
 from itertools import product
 import pandas as pd
 import argparse
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 sys.path.append('./OptimizersArticle')
 
@@ -61,6 +63,8 @@ if __name__ == '__main__':
             RTO_opt = ((df_pyomo['Q_opt']*df_pyomo['P_opt']).sum().round(3), (df_scipy['Q_opt']*df_scipy['P_opt']).sum().round(3),)
             MARGIN_opt = ((df_pyomo['Q_opt']*(df_pyomo['P_opt'] - df_pyomo['C'])).sum().round(3),
                           (df_scipy['Q_opt']*(df_scipy['P_opt'] - df_scipy['C'])).sum().round(3))
+            MARGIN_old = ((df_pyomo['Q']*(df_pyomo['P'] - df_pyomo['C'])).sum().round(3),
+                          (df_scipy['Q']*(df_scipy['P'] - df_scipy['C'])).sum().round(3))
             # x_opt = (df_pyomo['x_opt'].to_list(), df_scipy['x_opt'].to_list())
             res = (
                 n,
@@ -75,9 +79,11 @@ if __name__ == '__main__':
                 RTO_opt[1],
                 MARGIN_opt[0],
                 MARGIN_opt[1],
+                MARGIN_old[0],
+                MARGIN_old[1],
             )
 
-            print(res[:-2])
+            print(res)
             times.append(res)
 
         res = pd.DataFrame(times, columns=['N',
@@ -92,12 +98,13 @@ if __name__ == '__main__':
                                            'RTO_scipy',
                                            'MARGIN_pyomo',
                                            'MARGIN_scipy',
+                                           'MARGIN0_pyomo',
+                                           'MARGIN0_scipy',
                                            ])
         res.to_csv(FILE_STAT, sep='\t', index=False)
 
 
     if args['mode'] == 'plot':
-        import matplotlib.pyplot as plt
 
         data = pd.read_csv(FILE_STAT, sep='\t')
 
@@ -114,7 +121,6 @@ if __name__ == '__main__':
         plt.savefig(f'{IMAGES_PATH}/solving_time.png')
         plt.show();
 
-        import seaborn as sns
         sns.set_style(style="whitegrid")
 
         plt.figure(figsize=(12, 6), dpi=100)
@@ -123,6 +129,7 @@ if __name__ == '__main__':
         b = data['RTO_pyomo'] / data['RTO_scipy']
         a, b = 100 * a, 100 * b
         sns.scatterplot(a, b)
+        plt.title('Отношения показателей')
         plt.ylabel('Оборот(pyomo) в % от Оборот(scipy)')
         plt.xlabel('Прибыль(pyomo) в % от Прибыль(scipy)')
         plt.savefig(f'{IMAGES_PATH}/analyze.png')
