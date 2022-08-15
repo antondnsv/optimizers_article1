@@ -14792,7 +14792,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <p>Реальные данные мы использовать не можем из-за NDA, поэтому будем генерировать их из случайных распределений (функция generate_base_data),
 исходя из наших представлений о возможных значениях величин в фуд-ритейле.</p>
 <details>
-<summary> Пример данных для NLP постановки: </summary>
+<summary> Пример данных для NLP постановки, [код](https://github.com/6redik/optimizers_article1/blob/master/data_generator/data_generator.py): </summary>
 <img src="images/data_sample.png" width="300" align="c"/>
 </details>
 </div>
@@ -14829,7 +14829,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%D0%9C%D0%B5%D1%82%D0%BE%D0%B4-init_objective">&#1052;&#1077;&#1090;&#1086;&#1076; init_objective<a class="anchor-link" href="#%D0%9C%D0%B5%D1%82%D0%BE%D0%B4-init_objective">&#182;</a></h3>
+<h3 id="%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D1%86%D0%B5%D0%BB%D0%B5%D0%B2%D0%BE%D0%B9-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8">&#1047;&#1072;&#1076;&#1072;&#1085;&#1080;&#1077; &#1094;&#1077;&#1083;&#1077;&#1074;&#1086;&#1081; &#1092;&#1091;&#1085;&#1082;&#1094;&#1080;&#1080;<a class="anchor-link" href="#%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D1%86%D0%B5%D0%BB%D0%B5%D0%B2%D0%BE%D0%B9-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14861,7 +14861,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B-init_constraints-%D0%B8-add_constraints">&#1052;&#1077;&#1090;&#1086;&#1076;&#1099; init_constraints &#1080; add_constraints<a class="anchor-link" href="#%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B-init_constraints-%D0%B8-add_constraints">&#182;</a></h3>
+<h3 id="%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B9">&#1047;&#1072;&#1076;&#1072;&#1085;&#1080;&#1077; &#1086;&#1075;&#1088;&#1072;&#1085;&#1080;&#1095;&#1077;&#1085;&#1080;&#1081;<a class="anchor-link" href="#%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B9">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14899,7 +14899,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%D0%9C%D0%B5%D1%82%D0%BE%D0%B4-solve">&#1052;&#1077;&#1090;&#1086;&#1076; solve<a class="anchor-link" href="#%D0%9C%D0%B5%D1%82%D0%BE%D0%B4-solve">&#182;</a></h3>
+<h3 id="%D0%9F%D0%BE%D0%B8%D1%81%D0%BA-%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F">&#1055;&#1086;&#1080;&#1089;&#1082; &#1088;&#1077;&#1096;&#1077;&#1085;&#1080;&#1103;<a class="anchor-link" href="#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA-%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14910,7 +14910,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>В Scipy задача оптимизации запускается через minimize, а в PYOMO через проинициализированный объект SolverFactory методом solve.</p>
+<p>В Scipy задача оптимизации запускается через метод minimize, а в PYOMO через проинициализированный объект SolverFactory методом solve.</p>
 <div class="highlight"><pre><span></span><span class="c1"># SCIPY</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span>  <span class="n">method</span><span class="o">=</span><span class="s1">&#39;cobyla&#39;</span><span class="p">,</span> <span class="n">constraints</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">)</span>
 
@@ -14941,7 +14941,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Так как оптимизаторы устанавливаются отдельно от python, то для получения аналогичных результатов можно
-воспользоваться Dockerfile, настроив контейнер, как описано в README проекта.</p>
+воспользоваться Dockerfile, настроив контейнер, как описано в README <a href="https://github.com/6redik/optimizers_article1">проекта</a>.</p>
 <p>Чтобы запустить расчёты, нужно выполнить команду:</p>
 <div class="highlight"><pre><span></span><span class="go">python runner.py -m pyomo</span>
 <span class="go">python runner.py -m scipy</span>
@@ -14950,12 +14950,12 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <div class="highlight"><pre><span></span><span class="go">python runner.py -m compare</span>
 </pre></div>
 <p>Зависимость длительности поиска оптимального решения от количества переменных представлена на графике ниже.</p>
-<p><img src="./images/docker/solving_time.png" width="900" align="c"/></p>
+<p><img src="./images/docker/solving_time.png" width="700" align="c"/></p>
 <p>Из графика можно сделать вывод, что PYOMO с солвером ipopt значительно превосходит Scipy с COBYLA при N &gt; 50.</p>
 <p>В некоторых точках Scipy.COBYLA прерывается достаточно быстро, что видно из пилообразной формы. При этом
 выдаётся статус, что оптимальное решение не найдено.</p>
 <p>Проанализируем отношения оборотов и прибыли для найденных решений:
-<img src="./images/docker/analyze.png" width="600" align="c"/></p>
+<img src="./images/docker/analyze.png" width="700" align="c"/></p>
 <p>Солвер PYOMO.ipopt в большинстве случаев достигает лучшего суммарного оборота, чем scipy.COBYLA.</p>
 <p>Также хочется отметить, что PYOMO затрачивает много времени на подготовку данных во внутреннем формате для передачи
 во внешний солвер, что в некоторых случаях занимает больше времени, чем поиск решения.
@@ -14985,11 +14985,11 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <p>В данной статье мы:</p>
 <ul>
 <li>рассмотрели, какие задачи оптимизации бывают на практике,</li>
-<li>показали, как можно решать задачу ценообразования с помощью PYOMO,</li>
+<li>показали, как можно решать задачу ценообразования с помощью PYOMO <a href="https://github.com/6redik/optimizers_article1">(код для статьи)</a>,</li>
 <li>сравнили производительность солверов PYOMO и Scipy.</li>
 </ul>
 <p>В следующей стать более детально обсудим другие open-source солверы для python, их различия в реализации и производительности.</p>
-<p>Над статьёй работали Антон Денисов, Михаил Будылин.</p>
+<p>Над статьей работали Антон Денисов, Михаил Будылин.</p>
 
 </div>
 </div>
