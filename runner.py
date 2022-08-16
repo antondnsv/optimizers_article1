@@ -59,7 +59,7 @@ if __name__ == '__main__':
         times = []
         for var_num in range(10, args['GRID_SIZE'], 5):
             for iter_num in range(30):
-                data = generate_data(var_num, seed=args['seed']+i)
+                data = generate_data(var_num, seed=args['seed']+iter_num)
                 model_pyomo_ipopt = pricing_optimization(data, PyomoModel)
                 model_scipy_cobyla = pricing_optimization(data, ScipyModel)
                 df_pyomo = model_pyomo_ipopt['data'].set_index('plu')
