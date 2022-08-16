@@ -25,14 +25,17 @@ FILE_STAT = f'{STAT_PATH}/stat.csv'
 
 
 if __name__ == '__main__':
+
     args_parser = argparse.ArgumentParser()
+
     args_parser.add_argument("-m", "--mode", required=False, default=False, type=str,
-                             help='')
+                             help='Режим работы: pyomo/scipy/compare/plot')
     args_parser.add_argument("-N", "--N", required=False, default=10, type=int,
-                             help='Размер задачи')
+                             help='Количество переменных в задаче')
     args_parser.add_argument("-s", "--seed", required=False, default=42, type=int,
                              help='seed')
-
+    args_parser.add_argument("-gs", "--GRID_SIZE", required=False, default=255, type=int,
+                             help='Размер сетки для режима compare (шаг = 5')
 
     args = vars(args_parser.parse_args())
 
@@ -41,52 +44,50 @@ if __name__ == '__main__':
     if args['mode'] == 'pyomo':
         print('запуск модели Pyomo')
         model = pricing_optimization(data, PyomoModel)
-        print(model['data'])
+        print(model['status'])
+        print(model['t'])
 
     if args['mode'] == 'scipy':
         print('запуск модели Scipy')
         model = pricing_optimization(data, ScipyModel)
-        # print(model['data'])
         print(model['status'])
-        print(model['message'])
+        print(model['t'])
 
     if args['mode'] == 'compare':
+        print('запуск расчётов в режиме compare. Внимание, расчёт занимает длительное время!')
 
         times = []
-        for n in range(10, 255, 5):
-            data = generate_data(n, seed=args['seed'])
-            model_pyomo_ipopt = pricing_optimization(data, PyomoModel)
-            model_scipy_cobyla = pricing_optimization(data, ScipyModel)
-            df_pyomo = model_pyomo_ipopt['data'].set_index('plu')
-            df_scipy = model_scipy_cobyla['data'].set_index('plu')
-            equal_answers = (df_pyomo['x_opt'].round(2) != df_scipy['x_opt'].round(2)).sum() > 0
-            RTO_opt = ((df_pyomo['Q_opt']*df_pyomo['P_opt']).sum().round(3), (df_scipy['Q_opt']*df_scipy['P_opt']).sum().round(3),)
-            MARGIN_opt = ((df_pyomo['Q_opt']*(df_pyomo['P_opt'] - df_pyomo['C'])).sum().round(3),
-                          (df_scipy['Q_opt']*(df_scipy['P_opt'] - df_scipy['C'])).sum().round(3))
-            MARGIN_old = ((df_pyomo['Q']*(df_pyomo['P'] - df_pyomo['C'])).sum().round(3),
-                          (df_scipy['Q']*(df_scipy['P'] - df_scipy['C'])).sum().round(3))
-            # x_opt = (df_pyomo['x_opt'].to_list(), df_scipy['x_opt'].to_list())
-            res = (
-                n,
-                round(model_pyomo_ipopt['t'], 5),
-                model_pyomo_ipopt['status'],
-                model_pyomo_ipopt['message'],
-                round(model_scipy_cobyla['t'], 5),
-                model_scipy_cobyla['status'],
-                model_scipy_cobyla['message'],
-                equal_answers,
-                RTO_opt[0],
-                RTO_opt[1],
-                MARGIN_opt[0],
-                MARGIN_opt[1],
-                MARGIN_old[0],
-                MARGIN_old[1],
-            )
+        for var_num in range(10, args['GRID_SIZE'], 5):
+            for iter_num in range(30):
+                data = generate_data(var_num, seed=args['seed']+i)
+                model_pyomo_ipopt = pricing_optimization(data, PyomoModel)
+                model_scipy_cobyla = pricing_optimization(data, ScipyModel)
+                df_pyomo = model_pyomo_ipopt['data'].set_index('plu')
+                df_scipy = model_scipy_cobyla['data'].set_index('plu')
+                equal_answers = (df_pyomo['x_opt'].round(2) != df_scipy['x_opt'].round(2)).sum() > 0
+                RTO_opt = ((df_pyomo['Q_opt'] * df_pyomo['P_opt']).sum().round(3),
+                           (df_scipy['Q_opt'] * df_scipy['P_opt']).sum().round(3),)
+                MARGIN_opt = ((df_pyomo['Q_opt'] * (df_pyomo['P_opt'] - df_pyomo['C'])).sum().round(3),
+                              (df_scipy['Q_opt'] * (df_scipy['P_opt'] - df_scipy['C'])).sum().round(3))
+                res = (
+                    var_num,
+                    iter_num,
+                    round(model_pyomo_ipopt['t'], 5),
+                    model_pyomo_ipopt['status'],
+                    model_pyomo_ipopt['message'],
+                    round(model_scipy_cobyla['t'], 5),
+                    model_scipy_cobyla['status'],
+                    model_scipy_cobyla['message'],
+                    equal_answers,
+                    *RTO_opt,
+                    *MARGIN_opt,
+                )
+                times.append(res)
 
-            print(res)
-            times.append(res)
+            print(var_num)
 
         res = pd.DataFrame(times, columns=['N',
+                                           'i',
                                            'pyomo_ipopt',
                                            'pyomo_status',
                                            'pyomo_message',
@@ -98,11 +99,9 @@ if __name__ == '__main__':
                                            'RTO_scipy',
                                            'MARGIN_pyomo',
                                            'MARGIN_scipy',
-                                           'MARGIN0_pyomo',
-                                           'MARGIN0_scipy',
                                            ])
-        res.to_csv(FILE_STAT, sep='\t', index=False)
 
+        res.to_csv(FILE_STAT, sep='\t', index=False)
 
     if args['mode'] == 'plot':
 
@@ -110,8 +109,10 @@ if __name__ == '__main__':
 
         plt.figure(figsize=(12, 6), dpi=100)
 
-        plt.plot(data['N'], data['scipy_cobyla'], lw=2, label='scipy.cobyla')
-        plt.plot(data['N'], data['pyomo_ipopt'], lw=2, label='pyomo.ipopt')
+        time_pyomo = data.groupby(['N'])['pyomo_ipopt'].mean()
+        time_scipy = data.groupby(['N'])['scipy_cobyla'].mean()
+        plt.plot(time_scipy, lw=2, label='scipy.cobyla')
+        plt.plot(time_pyomo, lw=2, label='pyomo.ipopt')
         plt.yscale('log')
         plt.legend()
         plt.xlabel('Количество переменных')
@@ -119,19 +120,17 @@ if __name__ == '__main__':
         plt.title('Время решения MINLP задачи через pyomo.bonmin')
         plt.grid()
         plt.savefig(f'{IMAGES_PATH}/solving_time.png')
-        plt.show();
+        plt.show()
 
         sns.set_style(style="whitegrid")
-
         plt.figure(figsize=(12, 6), dpi=100)
 
-        a = data['MARGIN_pyomo'] / data['MARGIN_scipy']
-        b = data['RTO_pyomo'] / data['RTO_scipy']
-        a, b = 100 * a, 100 * b
-        sns.scatterplot(a, b)
+        margin = data['MARGIN_pyomo'] / data['MARGIN_scipy']
+        sales = data['RTO_pyomo'] / data['RTO_scipy']
+        margin, sales = 100 * margin, 100 * sales
+        sns.scatterplot(margin, sales)
         plt.title('Отношения показателей')
         plt.ylabel('Оборот(pyomo) в % от Оборот(scipy)')
         plt.xlabel('Прибыль(pyomo) в % от Прибыль(scipy)')
         plt.savefig(f'{IMAGES_PATH}/analyze.png')
-
         plt.show()
