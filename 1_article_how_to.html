@@ -14767,7 +14767,8 @@ Q_{i}(P_{i}) = Q_{0, i} \exp\bigg(E_{i} \cdot \bigg(\frac{P_{i}}{P_{0, i}} - 1\b
 \sum_{i=1}^{n} (P_i - C_i) \cdot Q_i(x_i) \geqslant \sum_{i=1}^{n} (P_{0, i} - C_i) \cdot Q_ {0, i},\\
 \\
 x_i \in [x_i^l, x_i^u], \ i=1..n\\
-\end{cases}
+\end{cases}<p>Данная модель принадлежит к классу NLP, как нетрудно заметить из данных выше определений.</p>
+
 </div>
 </div>
 </div>
@@ -14944,8 +14945,8 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Так как оптимизаторы устанавливаются отдельно от python, то для получения аналогичных результатов можно
 воспользоваться Dockerfile, настроив контейнер, как описано в README <a href="https://github.com/6redik/optimizers_article1">проекта</a>.</p>
-<p>Для сравнения расчётов достаточно выполнить команду (имеййте ввиду, что в режиме compare расчёт занимает &gt; 3 часов на ноутбуке):</p>
-<div class="highlight"><pre><span></span><span class="go">python runner.py -m compare</span>
+<p>Для сравнения расчётов достаточно выполнить команду (осторожно, в режиме compare расчёт на ноутбуке занимает &gt; 3 часов, для ускорения можно уменьшить GRID_SIZE):</p>
+<div class="highlight"><pre><span></span><span class="go">python runner.py -m compare --GRID_SIZE 255</span>
 </pre></div>
 <p>Зависимость длительности поиска оптимального решения от количества переменных представлена на графике ниже.</p>
 <p><img src="./images/docker/solving_time.png" width="700" align="c"/></p>
