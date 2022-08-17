@@ -16,9 +16,9 @@ class OptimizationModel(abc.ABC):
     def __init__(self, data):
 
         self.data = data.copy()
-        self.plu_idx = data['plu'].index
+        self.plu_idx = data['sku'].index
 
-        self.N = self.data['plu'].nunique()
+        self.N = self.data['sku'].nunique()
         self.P = self.data['P'].values
         self.Q = self.data['Q'].values
         self.E = self.data['E'].values
@@ -27,8 +27,7 @@ class OptimizationModel(abc.ABC):
         # границы для индексов
         self.x_lower = np.array(self.data['x_lower'].values, dtype=float)
         self.x_upper = np.array(self.data['x_upper'].values, dtype=float)
-        self.x_init = self.data['x_init'].values
-        self.x0 = self.data['x_init'].values
+        self.x_init = (0.5 * (data['x_lower'] + data['x_upper'])).values
 
         self.m_min = sum(self.data['Q'] * (self.data['P'] - self.data['C']))
 
@@ -40,15 +39,9 @@ class OptimizationModel(abc.ABC):
         """
 
     @abc.abstractmethod
-    def add_constraints(self):
-        """
-        Добавление в модель ограничения на маржу
-        """
-
-    @abc.abstractmethod
     def init_constraints(self):
         """
-        Добавление в модель ограничения на маржу
+        Инициализация ограничений
         """
 
     @abc.abstractmethod
@@ -79,12 +72,12 @@ class ScipyModel(OptimizationModel):
 
         self.obj = objective
 
-    def add_constraints(self):
+    def init_constraints(self):
+
         A = np.eye(self.N, self.N, dtype=float)
         bounds = LinearConstraint(A, self.x_lower, self.x_upper)
         self.constraints.append(bounds)
 
-    def init_constraints(self):
         def con_mrg(x):
             con_mrg_expr = sum((self.P * x - self.C) * self.Q * self._el(self.E, x))
             return con_mrg_expr
@@ -93,7 +86,7 @@ class ScipyModel(OptimizationModel):
 
     def solve(self):
 
-        result = minimize(self.obj, self.x0,  method='cobyla', constraints=self.constraints)
+        result = minimize(self.obj, self.x_init, method='cobyla', constraints=self.constraints)
 
         self.data['x_opt'] = result['x']
         self.data['P_opt'] = self.data['x_opt'] * self.data['P']
@@ -121,9 +114,6 @@ class PyomoModel(OptimizationModel):
     def _el(self, i):
         # вспомогательная функция для пересчета спроса при изменении цены
         return pyo.exp(self.E[i] * (self.model.x[i] - 1.0))
-
-    def add_constraints(self):
-        return
 
     def init_objective(self):
 

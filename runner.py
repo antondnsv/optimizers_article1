@@ -62,8 +62,8 @@ if __name__ == '__main__':
                 data = generate_data(var_num, seed=args['seed']+iter_num)
                 model_pyomo_ipopt = pricing_optimization(data, PyomoModel)
                 model_scipy_cobyla = pricing_optimization(data, ScipyModel)
-                df_pyomo = model_pyomo_ipopt['data'].set_index('plu')
-                df_scipy = model_scipy_cobyla['data'].set_index('plu')
+                df_pyomo = model_pyomo_ipopt['data'].set_index('sku')
+                df_scipy = model_scipy_cobyla['data'].set_index('sku')
                 equal_answers = (df_pyomo['x_opt'].round(2) != df_scipy['x_opt'].round(2)).sum() > 0
                 RTO_opt = ((df_pyomo['Q_opt'] * df_pyomo['P_opt']).sum().round(3),
                            (df_scipy['Q_opt'] * df_scipy['P_opt']).sum().round(3),)

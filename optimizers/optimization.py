@@ -33,7 +33,6 @@ def pricing_optimization(data: pd.DataFrame,
     model = opt_model(data)
 
     model.init_objective()
-    model.add_constraints()
     model.init_constraints()
     result = model.solve()
     result['model_class'] = model
