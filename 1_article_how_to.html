@@ -14792,7 +14792,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Для демонстрации решения необходимы данные.</p>
 <p>Реальные данные мы использовать не можем из-за NDA, поэтому будем генерировать их из случайных распределений
-(функция <a href="https://github.com/6redik/optimizers_article1/blob/master/data_generator/data_generator.py">generate_data</a>),
+(функция <a href="https://github.com/antondnsv/optimizers_article1/blob/master/data_generator/data_generator.py">generate_data</a>),
 исходя из наших представлений о возможных значениях величин в фуд-ритейле.</p>
 <details>
 <summary> Пример данных для NLP постановки: </summary>
@@ -14809,7 +14809,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>SciPy и Pyomo имеют разные интерфейсы, чтобы как-то унифицировать работу с ними,
-будем наследоваться от базового класса, <a href="https://github.com/6redik/optimizers_article1/blob/master/optimizers/optimizers.py">код класса</a>.</p>
+будем наследоваться от базового класса, <a href="https://github.com/antondnsv/optimizers_article1/blob/master/optimizers/optimizers.py">код класса</a>.</p>
 <p>Методы, которые необходимо реализовать для каждого солвера:</p>
 <ul>
 <li>init_objective - задание целевой функции,</li>
@@ -14947,7 +14947,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Так как оптимизаторы устанавливаются отдельно от python, то для получения аналогичных результатов можно
-воспользоваться Dockerfile, настроив контейнер, как описано в README <a href="https://github.com/6redik/optimizers_article1">проекта</a>.</p>
+воспользоваться Dockerfile, настроив контейнер, как описано в README <a href="https://github.com/antondnsv/optimizers_article1">проекта</a>.</p>
 <p>Для сравнения расчётов достаточно выполнить команду (осторожно, в режиме compare расчёт на макбуке 2019 года занимает &gt; 3 часов, для ускорения можно уменьшить GRID_SIZE):</p>
 <div class="highlight"><pre><span></span><span class="go">python runner.py -m compare --GRID_SIZE 255</span>
 </pre></div>
@@ -14985,7 +14985,7 @@ x_i \in [x_i^l, x_i^u], \ i=1..n\\
 <li>Привели типичные примеры постановок задач оптимизации в области ритейла.
 <pre><code>  Рассчитываем, что читателю станет легче распознавать подобные задачи в своей области.</code></pre>
 </li>
-<li>Показали, как можно решать задачу ценообразования с помощью Pyomo <a href="https://github.com/6redik/optimizers_article1">(код для статьи)</a>.
+<li>Показали, как можно решать задачу ценообразования с помощью Pyomo <a href="https://github.com/antondnsv/optimizers_article1">(код для статьи)</a>.
 <pre><code>  Будем рады, если новичкам в моделировании данный материал упростит ознакомительный этап.</code></pre>
 </li>
 <li>Сравнили производительность солверов Pyomo.ipopt и Scipy.cobyla.
